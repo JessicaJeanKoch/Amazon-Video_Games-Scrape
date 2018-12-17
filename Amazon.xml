@@ -27,7 +27,7 @@
     </Fetch>
     <Parse>
       <XPath Id="ItemName" Title="Item Name" Expr="//span[contains(@@id,'productTitle')]"/>
-      <XPath Id="ReleaseDate" Title="Release Date" Expr="//*[text()[contains('Release date')]]/td[1]"/>
+      <XPath Id="ReleaseDate" Title="Release Date" Expr="//table[contains(@@id,'productDetails_detailBullets_sections1')]"/>
       <XPath Id="ESRB" Title="ESRB" Expr="//div[contains(@@id,'vgRating_feature_div')]/span[2]/a[1]"/>
       <XPath Id="Bullet_point_1" Title="Bullet Point 1" Expr="//div[contains(@@id,'feature-bullets')]/ul[1]/li[1]/span[contains(@@class,'a-list-item')]"/>
       <XPath Id="Bullet_point_2" Title="Bullet Point 2" Expr="//div[contains(@@id,'feature-bullets')]/ul[1]/li[2]/span[contains(@@class,'a-list-item')]"/>
