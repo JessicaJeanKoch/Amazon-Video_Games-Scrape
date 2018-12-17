@@ -1,20 +1,14 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+?xml version="1.0" encoding="utf-8" ?>
 <Suite RequireVersion="6.0" Title="Video Games" Id="VideoGames" Category="Products &amp; Reviews" SourceUrl="https://github.com/JessicaJeanKoch/Amazon-Video_Games-Scrape/blob/master/VideoGames.xml" HelpUrl="http://seotoolsforexcel.com/amazon/" HelpText="Documentation">
 
   <Author Name="Jessica Koch" Url=""/>
 
   <RestConnector Id="Details" Title="Details">
     <Parameters>
-      <Text Id="Query" Title="Query" Debug.DefaultValue="football" Required="true"/>
+      <Text Id="ASIN" Title="ASIN" Debug.DefaultValue="football" Required="true"/>
       <Text Id="Domain" Title="Domain" DefaultValue="amazon.com" Required="true"/>
-      <Select Id="Department" Title="Department" Required="false" DefaultValue="aps">
-        <DataSource>
-          <Resource Id="Departments"/>
-        </DataSource>
-      </Select>
-      <Number Id="Delay" Title="Delay" DefaultValue="0" Minimum="0" Maximum="20000" Required="false" HelpText=""/>
+      <Number Id="Delay" Title="Delay" DefaultValue="1" Minimum="0" Maximum="20000" Required="false" HelpText=""/>
     </Parameters>
-    <Paging PageSize="15" EvenPages="false"/>
     <Fetch>
       <HttpSettings>
         <IntervalBetweenRequests RandomFrom="@(Model.Delay)" RandomTo="@(Model.Delay+10)" IfSame="Host"/>
@@ -27,8 +21,30 @@
       </Fetch.Url>
     </Fetch>
     <Parse>
-      <XPath Id="ItemName" Title="Item Name" Expr="//*[@id='productTitle']" />
-      <XPath Id="Price" Title="Price" Expr=".//span[contains(@@class,'-price')]"/>
+      <XPath Id="ItemName" Title="Item Name" Expr="//span[contains(@@id,'productTitle')]"/>
+      <XPath Expr="//table[contains(@@id,'productDetails_detailBullets_sections1')]/th"/>
+        <Compute Id="ReleaseDate" Title="Release Date">
+          <Compute.Expr>
+            <![CDATA[
+            @if(Model.ReleaseInput.Contains("Release date"))
+            {
+              @(Model.ReleaseInput.IndexOf("Release date"))
+            }
+            else 
+            {
+              @:
+            }
+            ]]>
+          </Compute.Expr>
+          <XPath Id="ReleaseInput" Expr=".//td[1]"/>
+	</Compute>
+      <XPath Id="ESRB" Title="ESRB" Expr="//div[contains(@@id,'vgRating_feature_div')]/span[2]/a[1]"/>
+      <XPath Id="Bullet_point_1" Title="Bullet Point 1" Expr="//div[contains(@@id,'feature-bullets')]/ul[1]/li[1]/span[contains(@@class,'a-list-item')]"/>
+      <XPath Id="Bullet_point_2" Title="Bullet Point 2" Expr="//div[contains(@@id,'feature-bullets')]/ul[1]/li[2]/span[contains(@@class,'a-list-item')]"/>
+      <XPath Id="Bullet_point_3" Title="Bullet Point 3" Expr="//div[contains(@@id,'feature-bullets')]/ul[1]/li[3]/span[contains(@@class,'a-list-item')]"/>
+      <XPath Id="Bullet_point_4" Title="Bullet Point 4" Expr="//div[contains(@@id,'feature-bullets')]/ul[1]/li[4]/span[contains(@@class,'a-list-item')]"/>
+      <XPath Id="Bullet_point_5" Title="Bullet Point 5" Expr="//div[contains(@@id,'feature-bullets')]/ul[1]/li[5]/span[contains(@@class,'a-list-item')]"/>
+      <XPath Id="Product_description" Title="Description" Expr="//div[contains(@@id,'productDescription')]"/> 
     </Parse>
   </RestConnector>
 
