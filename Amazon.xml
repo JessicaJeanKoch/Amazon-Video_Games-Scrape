@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<Suite RequireVersion="6.0" Title="Amazon" Id="Amazon" Category="Products &amp; Reviews" SourceUrl="https://github.com/JessicaJeanKoch/Amazon-Video_Games-Scrape/edit/master/Amazon.xml" HelpUrl="http://seotoolsforexcel.com/amazon/" HelpText="Documentation">
+<Suite RequireVersion="6.0" Title="Amazon" Id="Amazon" Category="Products &amp; Reviews" SourceUrl="https://github.com/JessicaJeanKoch/Amazon-Video_Games-Scrape/blob/master/Amazon.xml" HelpUrl="http://seotoolsforexcel.com/amazon/" HelpText="Documentation">
 
   <Author Name="Jessica Koch" Url=""/>
 
