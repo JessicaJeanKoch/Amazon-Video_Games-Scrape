@@ -3,15 +3,10 @@
 
   <Author Name="Jessica Koch" Url=""/>
 
-  <RestConnector Id="Details" Title="Details">
+  <RestConnector Id="US" Title="Amazon US">
     <Parameters>
-      <Text Id="Query" Title="Query" Debug.DefaultValue="football" Required="true"/>
+      <Text Id="ASIN" Title="ASIN" Debug.DefaultValue="football" Required="true"/>
       <Text Id="Domain" Title="Domain" DefaultValue="amazon.com" Required="true"/>
-      <Select Id="Department" Title="Department" Required="false" DefaultValue="aps">
-        <DataSource>
-          <Resource Id="Departments"/>
-        </DataSource>
-      </Select>
       <Number Id="Delay" Title="Delay" DefaultValue="1" Minimum="0" Maximum="20000" Required="false" HelpText=""/>
     </Parameters>
     <Fetch>
@@ -34,8 +29,37 @@
       <XPath Id="Bullet_point_3" Title="Bullet Point 3" Expr="//div[contains(@@id,'feature-bullets')]/ul[1]/li[3]/span[contains(@@class,'a-list-item')]"/>
       <XPath Id="Bullet_point_4" Title="Bullet Point 4" Expr="//div[contains(@@id,'feature-bullets')]/ul[1]/li[4]/span[contains(@@class,'a-list-item')]"/>
       <XPath Id="Bullet_point_5" Title="Bullet Point 5" Expr="//div[contains(@@id,'feature-bullets')]/ul[1]/li[5]/span[contains(@@class,'a-list-item')]"/>
-      <XPath Id="Product_description" Title="Description" Expr="//div[contains(@@id,'productDescription')]"/> 
+      <XPath Id="Product_description" Title="Description" Expr="//div[contains(@@id,'productDescription')]/p"/> 
     </Parse>
   </RestConnector>
 
+  <RestConnector Id="CA" Title="Amazon Canada">
+    <Parameters>
+      <Text Id="ASIN" Title="ASIN" Debug.DefaultValue="football" Required="true"/>
+      <Text Id="Domain" Title="Domain" DefaultValue="amazon.com" Required="true"/>
+      <Number Id="Delay" Title="Delay" DefaultValue="1" Minimum="0" Maximum="20000" Required="false" HelpText=""/>
+    </Parameters>
+    <Fetch>
+      <HttpSettings>
+        <IntervalBetweenRequests RandomFrom="@(Model.Delay)" RandomTo="@(Model.Delay+10)" IfSame="Host"/>
+      </HttpSettings>
+      <Fetch.Url>
+        <![CDATA[
+        https://www.amazon.com/dp/@(Model.ASIN)
+				?th=1
+        ]]>
+      </Fetch.Url>
+    </Fetch>
+    <Parse>
+      <XPath Id="ItemName" Title="Item Name" Expr="//span[contains(@@id,'productTitle')]"/>
+      <XPath Id="ReleaseDate" Title="Release Date" Expr="//table[contains(@@id,'productDetails_detailBullets_sections1')]"/>
+      <XPath Id="ESRB" Title="ESRB" Expr="//div[contains(@@id,'vgRating_feature_div')]/span[2]/a[1]"/>
+      <XPath Id="Bullet_point_1" Title="Bullet Point 1" Expr="//div[contains(@@id,'feature-bullets')]/ul[1]/li[1]/span[contains(@@class,'a-list-item')]"/>
+      <XPath Id="Bullet_point_2" Title="Bullet Point 2" Expr="//div[contains(@@id,'feature-bullets')]/ul[1]/li[2]/span[contains(@@class,'a-list-item')]"/>
+      <XPath Id="Bullet_point_3" Title="Bullet Point 3" Expr="//div[contains(@@id,'feature-bullets')]/ul[1]/li[3]/span[contains(@@class,'a-list-item')]"/>
+      <XPath Id="Bullet_point_4" Title="Bullet Point 4" Expr="//div[contains(@@id,'feature-bullets')]/ul[1]/li[4]/span[contains(@@class,'a-list-item')]"/>
+      <XPath Id="Bullet_point_5" Title="Bullet Point 5" Expr="//div[contains(@@id,'feature-bullets')]/ul[1]/li[5]/span[contains(@@class,'a-list-item')]"/>
+      <XPath Id="Product_description" Title="Description" Expr="//div[contains(@@id,'productDescription')]/p"/> 
+    </Parse>
+  </RestConnector>
 </Suite>
